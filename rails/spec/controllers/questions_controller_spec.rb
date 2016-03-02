@@ -9,14 +9,14 @@ RSpec.describe QuestionsController, :type => :controller do
   describe 'GET #index' do
     it 'renders index' do
       get :index
-      response.should render_template :index
+      expect(response).to render_template :index
     end
   end
 
   describe 'GET #new' do
     it 'renders new' do
       get :new, id: 1
-      response.should render_template :new
+      expect(response).to render_template :new
     end
   end
 
@@ -28,7 +28,7 @@ RSpec.describe QuestionsController, :type => :controller do
 
       it 'redirects to home page' do
         post :create, question: valid_question_params
-        response.should redirect_to root_path
+        expect(response).to redirect_to root_path
         expect(flash[:notice]).to be_present
       end
     end
@@ -40,7 +40,7 @@ RSpec.describe QuestionsController, :type => :controller do
 
       it 'rerender :new' do
         post :create, question: invalid_question_params
-        response.should render_template :new
+        expect(response).to render_template :new
       end
     end
   end
@@ -53,12 +53,12 @@ RSpec.describe QuestionsController, :type => :controller do
 
       it 'updates existing_question' do
         existing_question.reload
-        existing_question.question.should eq valid_question_params[:question]
-        existing_question.answer.should eq valid_question_params[:answer]
+        expect(existing_question.question).to eq valid_question_params[:question]
+        expect(existing_question.answer).to eq valid_question_params[:answer]
       end
 
       it 'redirects to home page' do
-        response.should redirect_to root_path
+        expect(response).to redirect_to root_path
         expect(flash[:notice]).to be_present
       end
     end
@@ -71,12 +71,12 @@ RSpec.describe QuestionsController, :type => :controller do
       it 'fails to update a question' do
         previous_data = existing_question
         existing_question.reload
-        existing_question.question.should eq previous_data.question
-        existing_question.answer.should eq previous_data.answer
+        expect(existing_question.question).to eq previous_data.question
+        expect(existing_question.answer).to eq previous_data.answer
       end
 
       it 'redirects to :edit' do
-        response.should render_template :edit
+        expect(response).to render_template :edit
       end
     end
   end
@@ -86,7 +86,7 @@ RSpec.describe QuestionsController, :type => :controller do
       it 'redirects to home page' do
         question = Question.first
         post :answer, id: 1, answer: { answer: question.answer }
-        response.should redirect_to root_path
+        expect(response).to redirect_to root_path
         expect(flash[:notice]).to be_present
       end
     end
@@ -99,7 +99,7 @@ RSpec.describe QuestionsController, :type => :controller do
       it 'refreshes page' do
         question = Question.first
         post :answer, id: 1, answer: { answer: question.answer + " wrong" }
-        response.should redirect_to "where_i_came_from"
+        expect(response).to redirect_to "where_i_came_from"
         expect(flash[:notice]).to be_present
       end
     end
