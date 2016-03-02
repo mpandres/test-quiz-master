@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
   end
 
   def answer
-    @question = Question.find_question
+    @question = find_question
     if answer_params[:answer] == @question.answer
       redirect_to root_path, notice: 'You got it right!'
     else
