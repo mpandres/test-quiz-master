@@ -4,7 +4,11 @@ class Question < ActiveRecord::Base
   validates_presence_of :answer
 
   def is_correct?(submission)
-    answer == submission
+    unless answer.simplify == submission.simplify
+      return answer.to_word == submission.to_word
+    end
+
+    return true
   end
 
 end
