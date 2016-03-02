@@ -1,0 +1,32 @@
+.ui.grid.container.heading-wrapper
+  .centered.row
+    h1 Question Time!
+
+  .twelve.wide.centered.column
+    .ui.yellow.segment
+      h3.header
+        i.help.circle.icon
+        | Note
+
+      ul.ui.list
+        li
+          | Don't worry about capitalization. We'll make sure answers are not case sensitive.
+        li
+          | While we're at it, never mind the whitespace either. This shouldn't affect your answer. :)
+        li
+          | Lastly, "7" and "seven" are considered the same. Hope this helps you out!
+
+  .twelve.wide.centered.column
+    = render 'errors'
+
+    h3= markdown(@question.question)
+
+    .new.content
+      = form_for :answer, url: answer_question_path(@question), html: {class: 'ui form', id: 'question'} do |f|
+        .field
+          label Answer
+          = f.text_field :answer, placeholder: 'Answer'
+
+        .actions
+          = f.submit "Submit", class: 'ui teal button'
+

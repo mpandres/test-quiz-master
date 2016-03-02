@@ -1,0 +1,6 @@
+- if flash[:notice]
+    .ui.icon.success.message
+      i.check.circle.icon
+      .content
+        .header Success!
+        p = flash[:notice].html_safe

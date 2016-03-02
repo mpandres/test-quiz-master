@@ -1,0 +1,15 @@
+.twelve.wide.centered.column
+  = render 'errors'
+
+  .new.content
+    = form_for @question, html: {class: 'ui form', id: 'question'} do |f|
+      .field
+        label Question
+        = f.text_area :question, placeholder: 'Is tomato a fruit or a vegetable?'
+
+      .field
+        label Answer
+        = f.text_field :answer, placeholder: 'Fruit'
+
+      .actions
+        = f.submit "Submit", class: 'ui teal button'

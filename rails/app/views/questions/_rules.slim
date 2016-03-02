@@ -1,0 +1,18 @@
+.twelve.wide.centered.column
+  .ui.yellow.segment
+    h3.header
+      i.help.circle.icon
+      | Note
+
+    ul.ui.list
+      li
+        | You can add formatting to your question using markdown. For example: 
+        b "Hello, **this** is bold and _this_ is italic"
+        | &nbsp; translates to
+        = markdown("\"Hello, **this** is bold and _this_ is italic\"")
+      li
+        | You cannot add markdown formatting to answers.
+      li
+        | For more information, check out this &nbsp;
+        a href='https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet' markdown cheatsheet
+        | !

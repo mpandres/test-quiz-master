@@ -1,0 +1,16 @@
+.ui.grid.container.heading-wrapper
+  .centered.row
+    h1 Choose a Question!
+
+  .twelve.wide.centered.column
+    a.teal.ui.button#create-question href=new_question_path Add a question!
+    .ui.teal.segment.centered.cards
+      = render "flash"
+
+      - if @questions.any?
+        - @questions.each do |question|
+          = render 'card', question: question
+
+      - else
+        | No questions to display. :( &nbsp;
+        | Why not add your own?
