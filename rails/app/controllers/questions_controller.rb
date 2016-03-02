@@ -31,7 +31,8 @@ class QuestionsController < ApplicationController
     if answer_params[:answer] == @question.answer
       redirect_to root_path, notice: 'You got it right!'
     else
-      redirect_to :back, notice: 'Wrong answer. Try again?'
+      @question.errors[:base] << 'Wrong answer. Try again?'
+      render :show
     end
   end
 

@@ -5,9 +5,21 @@
       - @question.errors.full_messages.each do |message|
         .message= message
 
+  .container
+    %p You can add formatting to your question using markdown. For example: Hello, **this** is bold and _this_ is italic.
+
+  .container
+    %p= markdown("Hello, **this** is bold and _this_ is italic.")
+
+  .container
+    %p<
+      Here's a &nbsp;
+      %a{:href => 'http://ruby-lang.org'}>cheatsheet
+      &nbsp; for the interested reader.
+
   .form-group
     = f.label :question
-    = f.text_field :question, class: 'form-control'
+    = f.text_area :question, class: 'form-control'
 
   .form-group
     = f.label :answer

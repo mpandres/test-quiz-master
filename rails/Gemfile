@@ -30,7 +30,11 @@ gem 'bootstrap-sass', '~> 3.3.4'
 
 gem 'haml-rails'
 
+# Converts string integers to words
 gem 'humanize'
+
+# Allows markdown formatting
+gem 'redcarpet'
 
 group :development, :test do
   gem 'rspec-rails'

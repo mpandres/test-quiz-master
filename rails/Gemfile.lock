@@ -103,6 +103,7 @@ GEM
     rb-readline (0.5.3)
     rdoc (4.2.2)
       json (~> 1.4)
+    redcarpet (3.3.4)
     rspec-core (3.4.3)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -168,6 +169,7 @@ DEPENDENCIES
   jquery-rails
   rails (= 4.1.7)
   rb-readline
+  redcarpet
   rspec-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)

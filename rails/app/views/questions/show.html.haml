@@ -1,8 +1,13 @@
 .container
+  - if @question.errors.present?
+    .alert.alert-danger
+      - @question.errors.full_messages.each do |message|
+        .message= message
+
   %h1 Question time...
 
   .well
-    %p= @question.question
+    %p= markdown(@question.question)
 
     = form_for :answer, url: answer_question_path(@question) do |f|
       .form-group

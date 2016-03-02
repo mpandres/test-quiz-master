@@ -84,23 +84,16 @@ RSpec.describe QuestionsController, :type => :controller do
   describe 'POST #answer' do
     context "with correct answer" do
       it 'redirects to home page' do
-        question = Question.first
-        post :answer, id: 1, answer: { answer: question.answer }
+        post :answer, id: existing_question, answer: { answer: existing_question.answer }
         expect(response).to redirect_to root_path
         expect(flash[:notice]).to be_present
       end
     end
 
     context "with incorrect answer" do
-      before(:each) do
-        request.env["HTTP_REFERER"] = "where_i_came_from"
-      end
-
-      it 'refreshes page' do
-        question = Question.first
-        post :answer, id: 1, answer: { answer: question.answer + " wrong" }
-        expect(response).to redirect_to "where_i_came_from"
-        expect(flash[:notice]).to be_present
+      it 'rerenders show' do
+        post :answer, id: existing_question, answer: { answer: existing_question.answer + " wrong" }
+        expect(response).to render_template :show
       end
     end
   end
