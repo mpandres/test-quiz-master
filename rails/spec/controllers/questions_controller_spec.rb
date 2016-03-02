@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, :type => :controller do
 
-  valid_question = { question: "What is the color of the sky?", answer: "Blue" }
-  invalid_question = { question: nil, answer: nil }
+  valid_question_params = { question: "What is the color of the sky?", answer: "Blue" }
+  invalid_question_params = { question: nil, answer: nil }
+  existing_question = FactoryGirl.create :question
 
   describe 'GET #index' do
     it 'renders index' do
@@ -22,11 +23,11 @@ RSpec.describe QuestionsController, :type => :controller do
   describe 'POST #create' do
     context "with valid attributes" do
       it 'creates a question' do
-        expect{ post :create, question: valid_question }.to change(Question, :count).by 1
+        expect{ post :create, question: valid_question_params }.to change(Question, :count).by 1
       end
 
       it 'redirects to home page' do
-        post :create, question: valid_question
+        post :create, question: valid_question_params
         response.should redirect_to root_path
         expect(flash[:notice]).to be_present
       end
@@ -34,11 +35,11 @@ RSpec.describe QuestionsController, :type => :controller do
 
     context "with invalid attributes" do
       it 'fails to create a question' do
-        expect{ post :create, question: invalid_question }.to_not change(Question, :count)
+        expect{ post :create, question: invalid_question_params }.to_not change(Question, :count)
       end
 
       it 'rerender :new' do
-        post :create, question: invalid_question
+        post :create, question: invalid_question_params
         response.should render_template :new
       end
     end
@@ -47,14 +48,13 @@ RSpec.describe QuestionsController, :type => :controller do
   describe 'PUT #update' do
     context "with valid attributes" do
       before :each do
-        @existing_question = Question.create!( question: "Can penguins fly?", answer: "No")
-        put :update, id: @existing_question, question: valid_question
+        put :update, id: existing_question, question: valid_question_params
       end
 
       it 'updates existing_question' do
-        @existing_question.reload
-        @existing_question.question.should eq("What is the color of the sky?")
-        @existing_question.answer.should eq("Blue")
+        existing_question.reload
+        existing_question.question.should eq valid_question_params[:question]
+        existing_question.answer.should eq valid_question_params[:answer]
       end
 
       it 'redirects to home page' do
@@ -65,14 +65,14 @@ RSpec.describe QuestionsController, :type => :controller do
 
     context "with invalid attributes" do
       before :each do
-        @existing_question = Question.create!( question: "Can penguins fly?", answer: "No")
-        put :update, id: @existing_question, question: invalid_question
+        put :update, id: existing_question, question: invalid_question_params
       end
 
       it 'fails to update a question' do
-        @existing_question.reload
-        @existing_question.question.should_not eq("What is the color of the sky?")
-        @existing_question.answer.should_not eq("Blue")
+        previous_data = existing_question
+        existing_question.reload
+        existing_question.question.should eq previous_data.question
+        existing_question.answer.should eq previous_data.answer
       end
 
       it 'redirects to :edit' do
