@@ -27,7 +27,12 @@ class QuestionsController < ApplicationController
   end
 
   def answer
-    # TODO
+    @question = Question.find(params[:id])
+    if answer_params[:answer] == @question.answer
+      redirect_to root_path, notice: 'You got it right!'
+    else
+      redirect_to :back, notice: 'Wrong answer. Try again?'
+    end
   end
 
   private
@@ -38,5 +43,9 @@ class QuestionsController < ApplicationController
 
   def question_params
     params.require(:question).permit(:question, :answer)
+  end
+
+  def answer_params
+    params.require(:answer).permit(:answer)
   end
 end
