@@ -28,6 +28,7 @@ RSpec.describe QuestionsController, :type => :controller do
       it 'redirects to home page' do
         post :create, question: valid_question
         response.should redirect_to root_path
+        expect(flash[:notice]).to be_present
       end
     end
 
@@ -58,6 +59,7 @@ RSpec.describe QuestionsController, :type => :controller do
 
       it 'redirects to home page' do
         response.should redirect_to root_path
+        expect(flash[:notice]).to be_present
       end
     end
 
@@ -85,6 +87,7 @@ RSpec.describe QuestionsController, :type => :controller do
         question = Question.first
         post :answer, id: 1, answer: { answer: question.answer }
         response.should redirect_to root_path
+        expect(flash[:notice]).to be_present
       end
     end
 
@@ -97,6 +100,7 @@ RSpec.describe QuestionsController, :type => :controller do
         question = Question.first
         post :answer, id: 1, answer: { answer: question.answer + " wrong" }
         response.should redirect_to "where_i_came_from"
+        expect(flash[:notice]).to be_present
       end
     end
   end
